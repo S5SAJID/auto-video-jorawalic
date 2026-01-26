@@ -1,0 +1,14 @@
+[project]
+name = "agenticshortdoggiestylevideomaker"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "assemblyai>=0.48.4",
+    "cuid>=0.4",
+    "dotenv>=0.9.9",
+    "elevenlabs>=2.31.0",
+    "manim>=0.19.2",
+    "moviepy",
+]
