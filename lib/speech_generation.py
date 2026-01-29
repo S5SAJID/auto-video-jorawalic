@@ -10,10 +10,11 @@ elevenlabs = ElevenLabs(
 )
 
 def generate_speech_with_word_timings(text: str, audio_file_path: str):
+    print("GENERATING AUDIO")
     # 1. Use the timestamps-enabled endpoint
     response = elevenlabs.text_to_speech.convert_with_timestamps(
         text=text,
-        voice_id="nPczCjzI2devNBz1zQrb",
+        voice_id="UgBBYS2sOqTuMpoF3BR0",
         model_id="eleven_flash_v2_5",
         output_format="mp3_44100_128",
     )
@@ -25,6 +26,8 @@ def generate_speech_with_word_timings(text: str, audio_file_path: str):
     # 3. Save the audio file
     with open(audio_file_path, "wb") as f:
         f.write(audio_bytes)
+
+    print("AUDIO GENERATED")
 
     # 4. Group character timestamps into word timestamps
     words = []
@@ -50,6 +53,8 @@ def generate_speech_with_word_timings(text: str, audio_file_path: str):
     # Add the final word
     if current_word:
         words.append({"word": current_word, "start": start_time, "end": last_end_time})
+    
+    print("WORD TIMING", words)
 
     return audio_file_path, words
 

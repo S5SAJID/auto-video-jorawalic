@@ -51,21 +51,21 @@ You have access to **pre-downloaded GIFs** organized by emotion/mood in these ca
 - `robber` - Sneaky, mischievous, "getting away with it"
 
 **How to Use GIFs:**
-When you want a GIF, specify it like this:
+When you want a GIF, specify it with a **search query** that describes the scene or emotion, mood, or reaction *(max 5-8 words)* you want:
 ```json
 {
   "type": "gif",
-  "content": "data\\assets\\gifs\\[EMOTION]\\*",
+  "content": "surprised cat mind blown reaction",
   "words": ["word1", "word2", "word3"]
 }
 ```
-Replace `[EMOTION]` with one of the available emotions above. The system will automatically select an appropriate GIF from that category.
+The `content` field should be a **short, descriptive query** that will be processed through RAG (Retrieval-Augmented Generation) to find the best matching GIF. Use the emotion categories listed above as inspiration for your queries.
 
 **Example:**
 ```json
 {
   "type": "gif",
-  "content": "data\\assets\\gifs\\surprised\\*",
+  "content": "surprised shocked cat reaction",
   "words": ["Mind", "blown!"]
 }
 ```
@@ -185,7 +185,7 @@ Your output MUST be a valid JSON array with this exact structure:
   },
   {
     "type": "gif",
-    "content": "data\\assets\\gifs\\surprised\\*",
+    "content": "surprised shocked reaction",
     "words": ["word1", "word2"]
   },
   {
@@ -213,7 +213,7 @@ Your output MUST be a valid JSON array with this exact structure:
 
 **2. `content`** (required):
    - For `text`: The actual text to display
-   - For `gif`: Path pattern like `data\\assets\\gifs\\[EMOTION]\\*`
+   - For `gif`: Short search query describing the desired emotion/reaction/scene (processed through RAG)
    - For `img`: Plain English search query
    - For `manim`: Object with animation properties
 
@@ -265,7 +265,7 @@ Perfect for:
 ### 6. **Story Structure**
 Every video should have:
 1. **Hook** (0-3s): Grab attention
-2. **Setup** (3-10s): Introduce the topic/problem
+2. **Setup** (3-10s): Introduce the topic/problem (for explainer or learning videos first explain the realistic problem and why then go the the main topic)
 3. **Build** (10-40s): Main content with variety
 4. **Payoff** (40-55s): Resolution, conclusion, call-to-action
 5. **End** (55-60s): Final thought or cliffhanger
@@ -287,7 +287,7 @@ Before submitting your JSON, verify:
 - [ ] First use of a Manim ID has `"action": "Create"`
 - [ ] Subsequent uses have `"action": "Modify"` or `"action": "Transform"`
 - [ ] Image search queries are specific and clear
-- [ ] GIF paths use correct emotion categories
+- [ ] GIF queries are descriptive and match the emotional tone (max 5-7 words)
 - [ ] Words array matches the content
 - [ ] Total word count is appropriate (100-250 words)
 - [ ] JSON is valid and properly formatted
@@ -307,7 +307,7 @@ Before submitting your JSON, verify:
   },
   {
     "type": "gif",
-    "content": "data\\assets\\gifs\\surprised\\*",
+    "content": "surprised shocked cat reaction",
     "words": ["They're", "actually", "weirder"]
   },
   {
@@ -343,7 +343,7 @@ Before submitting your JSON, verify:
   },
   {
     "type": "gif",
-    "content": "data\\assets\\gifs\\scared\\*",
+    "content": "scared frightened cat reaction",
     "words": ["Trapped", "forever"]
   },
   {
@@ -364,7 +364,7 @@ Before submitting your JSON, verify:
   },
   {
     "type": "gif",
-    "content": "data\\assets\\gifs\\confused\\*",
+    "content": "confused puzzled cat reaction",
     "words": ["Mind", "bending", "stuff"]
   },
   {
@@ -374,7 +374,7 @@ Before submitting your JSON, verify:
   },
   {
     "type": "gif",
-    "content": "data\\assets\\gifs\\happy\\*",
+    "content": "happy excited celebration cat",
     "words": ["Science", "is", "awesome!"]
   }
 ]
@@ -382,7 +382,7 @@ Before submitting your JSON, verify:
 
 ## Important Notes
 
-1. **Path Format**: Use `data\\assets\\gifs\\[EMOTION]\\*` for GIFs (double backslashes)
+1. **GIF Queries**: Use short, descriptive search queries (5-8 words max) for GIFs that will be processed through RAG
 2. **Manim Syntax**: Use exact Manim property names (case-sensitive)
 3. **Word Arrays**: Must contain individual words, not phrases
 4. **JSON Validity**: Test your JSON before submitting

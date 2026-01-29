@@ -1,4 +1,4 @@
-# Short Video Generator
+# AutoSec `Short Video Generator`
 
 A Python tool for generating short-form vertical videos by combining text overlays, animated GIFs, web images, and mathematical animations.
 

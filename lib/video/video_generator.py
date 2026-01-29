@@ -5,9 +5,10 @@ from lib.video.manim.manim_pipeline_manager.index import ManimPipelineManager
 from lib.config import VID_GEN_CONFIG
 import os
 from lib.images_finder import find_images
+from lib.rag.chromadb.search_gif_collection import search_gif_collection
 
 VIDEO_SIZE = VID_GEN_CONFIG["VIDEO_SIZE"]
-FONT_PATH = "data\\assets\\fonts\\BricolageGrotesque-VariableFont.ttf"
+FONT_PATH = "data\\assets\\fonts\\BricolageGrotesque-SemiBold.ttf"
 
 
 def generate_video(segments: list, word_timings: list, filename="video.mp4", fps=25, audio_file='output.mp3'):
@@ -25,8 +26,8 @@ def generate_video(segments: list, word_timings: list, filename="video.mp4", fps
   for sg_i, sg in enumerate(process_segments):
     txt = TextClip(
         text=" ".join(sg['words']), 
-        font_size=24, 
-        color='black', 
+        font_size=28, 
+        color=(10,10,10), 
         font=FONT_PATH,
         method='caption', 
         text_align="center",
@@ -37,7 +38,8 @@ def generate_video(segments: list, word_timings: list, filename="video.mp4", fps
         .with_duration(sg['duration'])
       
     if sg['type'] == 'gif':
-      gif_clip = VideoFileClip(sg['content']).with_position(('center','center'))\
+      gif_path = search_gif_collection(sg['content'])
+      gif_clip = VideoFileClip(gif_path).with_position(('center','center'))\
         .with_start(sg["start_time"])\
         .with_end(sg['end_time'])\
         .with_duration(sg['duration'])
