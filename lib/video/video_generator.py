@@ -6,9 +6,10 @@ from lib.config import VID_GEN_CONFIG
 import os
 from lib.images_finder import find_images
 from lib.rag.chromadb.search_gif_collection import search_gif_collection
+from pathlib import Path
 
 VIDEO_SIZE = VID_GEN_CONFIG["VIDEO_SIZE"]
-FONT_PATH = "data\\assets\\fonts\\BricolageGrotesque-SemiBold.ttf"
+FONT_PATH = Path("data/assets/fonts/BricolageGrotesque-SemiBold.ttf")
 
 
 def generate_video(segments: list, word_timings: list, filename="video.mp4", fps=25, audio_file='output.mp3'):
