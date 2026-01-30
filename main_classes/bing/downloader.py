@@ -17,7 +17,8 @@ def download(query, limit=100, output_dir='dataset', adult_filter_off=True, forc
         adult = 'on'
 
     
-    image_dir = Path(output_dir).joinpath(query).absolute()
+    image_dir = Path(output_dir) / query
+    image_dir = image_dir.resolve() 
 
     if force_replace:
         if Path.isdir(image_dir):
@@ -26,7 +27,7 @@ def download(query, limit=100, output_dir='dataset', adult_filter_off=True, forc
     # check directory and create if necessary
     try:
         if not Path.is_dir(image_dir):
-            Path.mkdir(image_dir, parents=True)
+            image_dir.mkdir(parents=True, exist_ok=True)
 
     except Exception as e:
         print('[Error]Failed to create directory.', e)
@@ -36,7 +37,7 @@ def download(query, limit=100, output_dir='dataset', adult_filter_off=True, forc
     bing = Bing(query, limit, image_dir, adult, timeout, filter, verbose)
     filename_extention = bing.run()
 
-    return image_dir / ("image_1." + filename_extention)
+    return image_dir / f"Image_1.{filename_extention}"
 
 
 if __name__ == '__main__':
