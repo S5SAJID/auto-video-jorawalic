@@ -17,3 +17,7 @@ data/images
 data/assets/middleframes
 .test.py
 temp_manim_scene.py
+
+# Video files
+*.mp4
+*.mp3

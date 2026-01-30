@@ -67,7 +67,7 @@ def generate_video(segments: list, word_timings: list, filename="video.mp4", fps
       subprocess.run([
           "manim", "-ql", "--transparent", "--format=mov", 
           script_path, "DynamicScene"
-      ], check=True)
+      ], check=True,  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL )
 
       # 3. Import back to MoviePy
       # Manim 2026 default path: media/videos/temp_manim_scene/480p15/DynamicScene.mov

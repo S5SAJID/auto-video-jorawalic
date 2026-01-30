@@ -3,3 +3,4 @@ def get_plain_script(segments):
   for i, sg in enumerate(segments):
     script += " ".join(sg['words']) + ", "
   return script
+

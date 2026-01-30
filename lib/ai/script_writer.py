@@ -17,21 +17,13 @@ client = OpenAI(
 @lru_cache(maxsize=1)
 def _load_system_prompt(pov_style: bool = False) -> str:
     """Load and cache the system prompt from markdown file."""
-    try:
-        with open("AI_VIDEO_GENERATION_PROMPT.md", "r", encoding="utf-8") as f:
-            system_prompt = f.read()
-        
-        if pov_style:
-            system_prompt += "\n\nFor now the video should be in meme POV style"
-        
-        logger.info("System prompt loaded successfully")
-        return system_prompt
-    except FileNotFoundError:
-        logger.error("AI_VIDEO_GENERATION_PROMPT.md not found")
-        raise
-    except Exception as e:
-        logger.error(f"Error loading system prompt: {e}")
-        raise
+    with open("AI_VIDEO_GENERATION_PROMPT.md", "r", encoding="utf-8") as f:
+        system_prompt = f.read()
+        system_prompt += "\n\n Important: \n - For now dont use manim. \n - Use the image search query as if you are searching on google search. \n - For explanatory videos use alot more images"
+    
+    if pov_style:
+        system_prompt += "\n\nFor now the video should be in meme POV style"
+    return system_prompt
 
 
 def generate_script(
@@ -63,22 +55,15 @@ def generate_script(
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": video_title}
-        ],
-        response_format={
-            "type": "json_schema",
-            "json_schema": {
-                "name": "VideoScript",
-                "strict": True,
-                "schema": VideoScriptOutput.model_json_schema()
-            }
-        }
+        ]
     )
+
+    gen_resp = response.choices[0].message.content.replace("```json", "").replace("```", "")
     
     # Parse and validate response
-    script_data = json.loads(response.choices[0].message.content)
-    validated_script = VideoScriptOutput(**script_data)
+    script_data = json.loads(gen_resp)
     
-    return validated_script
+    return script_data
 
 
 if __name__ == "__main__":
@@ -88,5 +73,5 @@ if __name__ == "__main__":
         for i, segment in enumerate(script.segments, 1):
             print(f"{i}. Type: {segment.type}, Words: {' '.join(segment.words)}")
     except Exception as e:
-        logger.error(f"Script generation failed: {e}")
+        print(f"Script generation failed: {e}")
         raise
